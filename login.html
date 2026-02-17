@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+             font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+            
+        }
+        main{
+            width: 300px;
+            height: 440px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 4px rgb(72, 69, 69);
+            padding: 20px 0 ;
+            margin: 150px 0 0 600px;
+        }
+        #logInhead{
+            text-align: center;
+            color: rgb(45, 135, 167);
+        }
+        /* #signuphead p{
+            margin-top: -10px;
+        } */
+        #logInbody{
+            padding: 10px 0 0 25px;
+            margin: 15px 0 30px;
+            
+            
+        }
+        #logInbody div{
+            padding: 7px;
+            font-weight: 600;
+            
+        }
+        #logInbody div h4{
+           
+            font-weight: 600;
+            color: rgb(45, 135, 167);
+            
+        }
+        #usernameInput, #emailInput{
+            width: 250px;
+            height: 35px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px rgb(164, 173, 232) solid;
+            
+        }
+        #logInButton{
+            width: 150px;
+            height: 40px;
+            background-color: rgb(81, 143, 166);
+            border: none;
+            border-radius: 5px;
+            box-shadow: 1px 1px 4px rgb(72, 69, 69);
+            margin: 15px 0 0 70px;
+            padding: -10px 0;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+            
+        }
+        #account-signin{
+            font-size: 14px;
+            text-align: center;
+            padding: 10px;
+        }
+        #account-signin span{
+            font-weight: 600;
+        }
+        #signup{
+            cursor: pointer;
+            color: rgb(45, 135, 167);
+
+        }
+        #passwordCharCheck{
+            display: none;
+            font-size: 10px;
+            color: red;
+            flex-direction: column;
+            margin: 5px 0 0 0;
+        }
+       
+        #passwordInputDiv{
+            width: 250px;
+            height: 35px;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 2px 0 0 0;
+            border: 1px rgb(164, 173, 232) solid;
+            display: flex;
+            gap: 0px;
+        }
+        #passwordInput{
+            width: 200px;
+            height: 25px;
+            padding: 5px;
+            margin: 0px 0 0 0;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        #showPassword{
+            margin: 0px 0 0 5px;
+            width: 35px;
+            height: 20px;
+            background-color: transparent;
+            border: none;
+
+        }
+        
+    </style>
+</head>
+<body>
+    <main>
+        <div id="logInhead" >
+            <h2>Log in to your account</h2>
+            <p>Please enter your details.</p>
+        </div>
+        <div id="logInbody">
+            
+            <div>
+                <h4>Email</h4>
+                <span><input type="email" placeholder="Enter email" id="emailInput"></span>
+            </div>
+            <div id="passwordDiv">
+                <h4>Password</h4>
+                <div id="passwordInputDiv">
+                    <span><input type="password" placeholder="Enter password" onclick="passwordChar()" id="passwordInput"></span>
+                    <button id="showPassword" onclick="togglePassword()">show</button>
+                </div>
+                <p id="passwordCharCheck"></p>
+                
+            </div>
+            
+        </div>
+        <button id="logInButton" onclick="login()">Log In</button>
+        <p id="account-signin">Don't have an account? <span id="signup" onclick="signup()">Sign up</span> </p>
+
+        
+
+    </main>
+</body>
+</html>
+<script>
+
+   let emailInput = document.getElementById('emailInput')
+   let passwordInput = document.getElementById('passwordInput')
+
+
+    userAccounts = JSON.parse(localStorage.getItem('userAccounts')) || []
+
+   function togglePassword() {
+        let passwordInput = document.getElementById('passwordInput')
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text'
+        } else {
+            passwordInput.type = 'password'
+        }
+    }
+
+    function signup() {
+        let signup = document.getElementById('signup')
+        window.location.href = 'index.html'
+    }
+
+    function login() {
+        let foundemail = userAccounts.find(function(accountObj) {
+        return accountObj.email === emailInput.value.toLowerCase().trim()
+    })
+    let foundpassword = userAccounts.find(function(accountObj) {
+        return accountObj.password === passwordInput.value
+    })
+        
+    if (emailInput.value.trim() === '' || passwordInput.value === '' ) {
+        alert('All fields are mandatory')
+            return
+    }
+    if (passwordInput.value.length < 8) {
+            alert('password less than 8 characters')
+            return
+    }
+    if (!foundemail || !foundpassword) {
+        alert('Wrong email or password')
+    }
+    if (foundemail && foundpassword) {
+        window.location.href = 'dashboard.html'
+    }
+    
+    
+    }
+
+    function passwordChar() {
+
+        passwordCharCheck.style.display ='block'
+        passwordCharCheck.innerHTML = `Password less must be 8 characters`
+        
+       if (passwordInput.value.length >= 8) {
+        passwordCharCheck.style.color = 'green'
+        return
+       }
+       if (passwordInput.value.length < 8) {
+            
+            passwordCharCheck.style.color = 'red'
+            
+        
+        }
+        
+    }
+
+</script>
