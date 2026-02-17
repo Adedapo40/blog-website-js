@@ -209,7 +209,7 @@
 
 
 
-        if (usernameInput.value === '' || emailInput.value === '' || passwordInput.value === '' ) {
+        if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value === '' ) {
             alert('All fields are mandatory')
             return
         }
