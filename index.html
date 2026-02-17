@@ -204,7 +204,7 @@
     function signUp() {
 
       let checkemail = userAccounts.find(function(accountObj) {
-        return accountObj.email === emailInput.value
+        return accountObj.email === emailInput.value.toLowerCase().trim()
     })
 
 
@@ -229,8 +229,8 @@
         
 
         let account = {
-        username: usernameInput.value.trim(),
-        email: emailInput.value,
+        username: usernameInput.value.toLowerCase().trim(),
+        email: emailInput.value.toLowerCase().trim(),
         password: passwordInput.value
     }
     userAccounts.push(account)
